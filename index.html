@@ -1,40 +1,132 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="utf-8" />
+    <title>Agentic Systems Using LLMS</title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/darkplus.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/darkplus.css" />
+  </head>
 
-		<title>reveal.js</title>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <section data-auto-animate>
+            <h2>Agentic Systems Using LLMs</h2>
+            <h3>Viktor Nawrath</h3>
+          </section>
+          <section data-auto-animate>
+            <h3>Viktor Nawrath</h3>
+            <ul>
+              <li>Software Engineering Manager @ profiq</li>
+              <li>Leading the Tech Research team</li>
+              <li>Exploring uses of AI in QA and development</li>
+            </ul>
+          </section>
+        </section>
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+        <section>
+          <section data-auto-animate="">
+            <h3>Agents</h3>
+            <p><strong>Definition:</strong> anytime LLM calls APIs</p>
+          </section>
+          <section data-auto-animate="">
+            <h3>Agents</h3>
+            <p><strong>Definition:</strong> anytime LLM calls APIs</p>
+            <p><strong>Core idea:</strong> generating structured output</p>
+          </section>
+          <section data-auto-animate="">
+            <h3>Agents</h3>
+            <p><strong>Definition:</strong> anytime LLM calls APIs</p>
+            <p><strong>Core idea:</strong> generating structured output</p>
+            <p><strong>Tiers:</strong> based on the level of automation</p>
+          </section>
+        </section>
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+        <section>
+          <h3>LLMs calling APIs</h3>
+          <p>
+            Pure LLM can give you instructions on commands to run, code
+            snippets, data to call HTTP endpoints
+          </p>
+        </section>
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+        <section>
+          <h3>Getting structured output</h3>
+          <p>ReAct framework</p>
+          <p>Tool calling</p>
+        </section>
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+        <section>
+          <section>
+            <h3>Examples of Agents</h3>
+          </section>
+          <section>
+            <h4>ChatGPT - chatbot with tools</h4>
+            <p>
+              Assistant can call tools (code interpreter, Bing browser, DALL-E,
+              etc.)
+            </p>
+          </section>
+          <section>
+            <h4>Alpha Codium - flow engineering</h4>
+            <p>Combination of LLMs and traditional code</p>
+            <p>
+              Much higher accuracy, we are providing the LLM with our knowledge
+              of the domain
+            </p>
+          </section>
+          <section>
+            <h4>Devin - fully autonomous agent</h4>
+            <p>Agent runs in a loop (varying expected iteration count)</p>
+            <p>Low reliability currently, but field is advancing quickly</p>
+            <p>
+              Other examples: BabyAGI, smol developer, AutoGPT, GPT-Engineer ,
+              OpenDevin
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <h3>Our Use Case</h3>
+          <p>Development, as you've seen in the auto-solver demo</p>
+          <p>
+            Smaller areas and very specific use-cases - learning, accessibility,
+            refactoring, prototyping
+          </p>
+          <p>QA automation, as I am about to show you</p>
+          <p>Automating human-dependent steps in QA process</p>
+          <p>Focus on web e2e tests</p>
+          <p>Agent navigating browser and executing test scenarios</p>
+          <p>Turning high-level test case descriptions into automated steps</p>
+          <p>
+            Potential for agent to explore web app, suggest test suites, build
+            models, etc.
+          </p>
+        </section>
+
+        <section>
+          <h3>Our Approach to Agents</h3>
+          <p>Building long-running agents for complex tasks</p>
+          <p>Close supervision of agents to handle low reliability</p>
+          <p>Direct use of histories for fine-tuning agent behavior</p>
+          <p>
+            Capturing extra information (internal monologue, reasoning) for
+            dataset building
+          </p>
+        </section>
+
+        <section>
+          <h3>Demo</h3>
+          <p>Agent running scenarios from the mind2web dataset</p>
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script>
+      Reveal.initialize();
+    </script>
+  </body>
 </html>

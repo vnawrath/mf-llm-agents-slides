@@ -1,0 +1,37 @@
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+// ---------------------------------------------
+
+// Include theme-specific fonts
+@import url(./fonts/source-sans-pro/source-sans-pro.css);
+
+// Override theme settings (see ../template/settings.scss)
+$backgroundColor: #1e1e1e; // Using editor.background color
+
+$mainColor: #d4d4d4; // Using editor.foreground color
+$headingColor: #d4d4d4; // Same as main text for consistency
+
+$mainFontSize: 42px;
+$mainFont: "Source Sans Pro", Helvetica, sans-serif;
+$headingFont: "Source Sans Pro", Helvetica, sans-serif;
+$headingTextShadow: none;
+$headingLetterSpacing: normal;
+$headingTextTransform: none;
+$headingFontWeight: 600;
+$linkColor: #007acc; // Using activityBarBadge.background color
+$linkColorHover: lighten($linkColor, 15%);
+$selectionBackgroundColor: rgba($linkColor, 0.75);
+
+$heading1Size: 2.5em;
+$heading2Size: 1.6em;
+$heading3Size: 1.3em;
+$heading4Size: 1em;
+
+// Since Dark+ theme is darker, adjusting light-bg-text-color might not be necessary
+// but you can tweak it to use for any specific light backgrounds if needed.
+// Example: @include light-bg-text-color(#d4d4d4);
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------
