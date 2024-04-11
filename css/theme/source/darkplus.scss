@@ -17,9 +17,9 @@ $mainFont: "Source Sans Pro", Helvetica, sans-serif;
 $headingFont: "Source Sans Pro", Helvetica, sans-serif;
 $headingTextShadow: none;
 $headingLetterSpacing: normal;
-$headingTextTransform: none;
+$headingTextTransform: uppercase;
 $headingFontWeight: 600;
-$linkColor: #007acc; // Using activityBarBadge.background color
+$linkColor: #42affa;
 $linkColorHover: lighten($linkColor, 15%);
 $selectionBackgroundColor: rgba($linkColor, 0.75);
 
@@ -28,9 +28,8 @@ $heading2Size: 1.6em;
 $heading3Size: 1.3em;
 $heading4Size: 1em;
 
-// Since Dark+ theme is darker, adjusting light-bg-text-color might not be necessary
-// but you can tweak it to use for any specific light backgrounds if needed.
-// Example: @include light-bg-text-color(#d4d4d4);
+// Change text colors against light slide backgrounds
+@include light-bg-text-color(#222);
 
 // Theme template ------------------------------
 @import "../template/theme";

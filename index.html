@@ -11,122 +11,316 @@
   <body>
     <div class="reveal">
       <div class="slides">
-        <section>
-          <section data-auto-animate>
+        <section data-auto-animate data-auto-animate-id="1">
+          <section data-auto-animate data-auto-animate-id="1">
             <h2>Agentic Systems Using LLMs</h2>
-            <h3>Viktor Nawrath</h3>
+            <h3 style="text-transform: none;">Viktor Nawrath</h3>
           </section>
-          <section data-auto-animate>
-            <h3>Viktor Nawrath</h3>
-            <ul>
-              <li>Software Engineering Manager @ profiq</li>
-              <li>Leading the Tech Research team</li>
-              <li>Exploring uses of AI in QA and development</li>
-            </ul>
+          <section data-auto-animate data-auto-animate-id="1">
+            <img src="images/logo pq.jpg" alt="profiq logo" style="border-radius: 5px; height: 150px;">
+            <h3 style="text-transform: none;">Viktor Nawrath</h3>
+            <p>Leading the Tech Research team </br>exploring uses of AI in QA and development</p>
+            <p><a href="mailto:viktor.nawrath@profiq.com">viktor.nawrath@profiq.com</a></p>            
           </section>
         </section>
 
-        <section>
-          <section data-auto-animate="">
-            <h3>Agents</h3>
-            <p><strong>Definition:</strong> anytime LLM calls APIs</p>
+        <section data-auto-animate data-auto-animate-id="2">
+          <section data-auto-animate data-auto-animate-id="2">
+            <h2>What are Agents?</h2>
           </section>
-          <section data-auto-animate="">
-            <h3>Agents</h3>
-            <p><strong>Definition:</strong> anytime LLM calls APIs</p>
-            <p><strong>Core idea:</strong> generating structured output</p>
+          <section data-auto-animate data-auto-animate-id="2">
+            <h2>What are Agents?</h2>
+            <p><strong>Definition:</strong> LLMs calling APIs</p>
+            <p><strong>Examples:</strong> tiered by level of autonomy</p>
+            <p><strong>Our Approach:</strong> generalist supervised agents</p>
           </section>
-          <section data-auto-animate="">
-            <h3>Agents</h3>
-            <p><strong>Definition:</strong> anytime LLM calls APIs</p>
-            <p><strong>Core idea:</strong> generating structured output</p>
-            <p><strong>Tiers:</strong> based on the level of automation</p>
-          </section>
-        </section>
-
-        <section>
-          <h3>LLMs calling APIs</h3>
-          <p>
-            Pure LLM can give you instructions on commands to run, code
-            snippets, data to call HTTP endpoints
-          </p>
-        </section>
-
-        <section>
-          <h3>Getting structured output</h3>
-          <p>ReAct framework</p>
-          <p>Tool calling</p>
         </section>
 
         <section>
           <section>
-            <h3>Examples of Agents</h3>
+            <h2>LLMs calling APIs</h2>
           </section>
           <section>
-            <h4>ChatGPT - chatbot with tools</h4>
-            <p>
-              Assistant can call tools (code interpreter, Bing browser, DALL-E,
-              etc.)
-            </p>
+            <h2>❌ LLMs NOT calling APIs</h2>
+            <div style="height: 500px; overflow-y: scroll;">
+              <img src="images/chatgpt-suggest.png" alt="LLM suggesting to run commands and code" style="width: 100%; max-width: unset; height: auto; max-height: unset;">
+            </div>
           </section>
           <section>
-            <h4>Alpha Codium - flow engineering</h4>
+            <h2>📝 Prompting a format</h2>
+            <pre>
+              <code class="hljs python" data-line-numbers="1-20|2-4|7|8-10|11|12|13-14|16-19|1-20" data-trim>
+PROMPT = """Answer the following questions as best you can.
+You have access to the following tools:
+- run_command: Run a command in the terminal
+- run_python: Run a Python script
+Use the following format:
+
+Question: the input question you must answer
+Thought: you should always think about what to do
+Action: the action to take, should be one of [{tool_names}]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question
+
+Begin!
+
+Question: How do I create a data visualization using matplotlib?
+Thought:
+"""
+              </code>
+            </pre>
+          </section>
+          <section>
+            <h2>🛠️ Tool/Function calling</h2>
+            <pre>
+              <code class="hljs python" data-line-numbers="1-33|3-8|9-31|13-14|15-27|1-33" data-trim>
+                response = client.chat.completions.create(
+                  model="gpt-3.5-turbo-0125",
+                  messages=[
+                      {
+                          "role": "user",
+                          "content": "What's the weather like in Paris?",
+                      }
+                  ],
+                  tools=[
+                      {
+                          "type": "function",
+                          "function": {
+                              "name": "get_current_weather",
+                              "description": "Get the current weather",
+                              "parameters": {
+                                  "type": "object",
+                                  "properties": {
+                                      "location": {
+                                          "type": "string",
+                                          "description": "Which city?",
+                                      },
+                                      "unit": {
+                                        "type": "string", 
+                                        "enum": ["celsius", "fahrenheit"]
+                                      },
+                                  },
+                                  "required": ["location"],
+                              },
+                          },
+                      }
+                  ],
+                  tool_choice="auto",
+                )
+              </code>
+            </pre>
+          </section>
+          <section>
+            <h2>👮‍♂️ Constrained inference</h2>
+            <div style="height: 500px; overflow-y: scroll;">
+              <img src="images/format-enforcer.png" alt="LM Format Enforcer repo" style="width: 100%; max-width: unset; height: auto; max-height: unset;">
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Examples of Agents</h2>
+          </section>
+          <section>
+            <h3>ChatGPT - chatbot with tools</h3>
+            <video controls>
+              <source src="images/chatgpt-code-interpreter.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </section>
+          <section>
+            <h3>Alpha Codium - flow engineering</h3>
+            <img src="images/alpha-codium.png" alt="Alpha Codium flow engineering" style="border-radius: 58px;">
             <p>Combination of LLMs and traditional code</p>
-            <p>
-              Much higher accuracy, we are providing the LLM with our knowledge
-              of the domain
-            </p>
+          </section>
+          <section data-auto-animate data-auto-animate-id="web-exploration">
+            <h3>Web exploration</h3>
+            <div style="height: 500px; background-color: #F9F7ED; padding: 16px; border-radius: 58px;">
+              <img src="images/explorer.png" alt="Web explorer flow graph">
+            </div>
+            <p>Creating Finite State Machines of Web Apps</p>
+          </section>
+          <section data-auto-animate data-auto-animate-id="web-exploration">
+            <h3>Web exploration</h3>
+            <img src="images/explorer_result.png" alt="Web explorer result" style="border-radius: 32px;">
+            <p>Resulting state machine graph</p>
           </section>
           <section>
-            <h4>Devin - fully autonomous agent</h4>
-            <p>Agent runs in a loop (varying expected iteration count)</p>
-            <p>Low reliability currently, but field is advancing quickly</p>
-            <p>
-              Other examples: BabyAGI, smol developer, AutoGPT, GPT-Engineer ,
-              OpenDevin
-            </p>
+            <h3>Lab assignment auto-solver</h3>
+            <pre>
+              <code class="hljs python" data-line-numbers="98-105|9-37|39-59|62-96" data-trim>
+                def clone_repo():
+                    # Clone the repository from Github
+                    pass
+
+                def execute_step():
+                    # Exectute step from the solution
+                    pass
+
+                gather_tasks_prompt = """Please list all the tasks specified in the README.md file.
+                Provide a detailed description of each task,
+                so that it can be completed just by the description.
+                Make sure to split combined tasks into separate entries in your response.
+                Make sure to include all the necessary steps to complete each task.
+                Here's a readme file for an assignment:
+                README.md
+                ```markdown
+                {readme}
+                ```
+                """
+
+                class Task(BaseModel):
+                    """Description of a single task to be done."""
+                    title: str = Field(..., description="Title of the task.")
+                    description: str = Field(..., description="Detailed description of the task.")
+
+                class Tasks(BaseModel):
+                    """Return a list of tasks specified in the README.md file."""
+                    tasks: list[Task] = Field(
+                        ...,
+                        description="List of tasks.",
+                    )
+
+                def gather_tasks(respository_dir):
+                    return (gather_tasks_prompt 
+                            | model.bind_tools([Tasks]) 
+                            | output_parser
+                    )
+
+                relevant_files_prompt = """Please select files yoy will need to read 
+                or update in order to complete the following task.
+                Only list files that are directly relevant to the task.
+                Here's a task you are trying to solve:
+                ```text
+                {task}
+                ```
+                And here is a list of files in your repository:
+                {files}
+                """
+
+                class RelevantFiles(BaseModel):
+                    """Return a list of files that will need to be read or modified in order to solve the task"""
+
+                    files: list[str] = Field(..., description="List of relevant files")
+
+                def get_relevant_files():
+                    return (relevant_files_prompt 
+                            | model.bind_tools([RelevantFiles]) 
+                            | output_parser
+                    )
+
+
+                solve_task_prompt = """Please provide a solution to the following task.
+                Pay close attention to all the instructions in the task description, and make sure your solution includes all the necessary steps to complete each instruction.
+                Here's a task you are trying to solve:
+                ```markdown
+                {task}
+                ```
+                And here is a list of files in your repository that are relevant to the completion of the task.
+                {files}
+                """
+
+                class RunCommand(BaseModel):
+                    """Run a command in the terminal"""
+
+                    type: str = Field("run_command", const=True)
+                    command: str = Field(..., description="Command to run in the terminal")
+
+                class UpdateFile(BaseModel):
+                    """Update a file with the specified content"""
+
+                    type: str = Field("update_file", const=True)
+                    file: str = Field(..., description="Path to the file")
+                    content: str = Field(..., description="New content for the file")
+
+                class Solution(BaseModel):
+                    """Solution to the task, with a list of descriptions for each step, and a list of actions to take."""
+
+                    steps: Union[RunCommand, UpdateFile] = Field(
+                        ..., description="Solution to the task"
+                    )
+
+                def solve_task():
+                    return (solve_task_prompt 
+                            | model.bind_tools([Solution]) 
+                            | output_parser
+                    )
+
+                repo_url = "..."
+                repository_dir = clone_repo(repo_url)
+                tasks = gather_tasks(repository_dir)
+                for i, task in enumerate(tasks):
+                    relevant_files = get_relevant_files(repository_dir, task, i)
+                    solution = solve_task(repository_dir, task, relevant_files)
+                    for step in solution:
+                        execute_step(step)
+              </code>
+            </pre>
+          </section>
+          <section data-background-iframe="http://localhost:8501" data-background-interactive >
+            <!-- Automate lab assignment solver -->
+          </section>
+          <section>
+            <h3>Devin - fully autonomous agent</h3>
+            <video controls>
+              <source src="images/devin-qlora.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
           </section>
         </section>
-
         <section>
-          <h3>Our Use Case</h3>
-          <p>Development, as you've seen in the auto-solver demo</p>
-          <p>
-            Smaller areas and very specific use-cases - learning, accessibility,
-            refactoring, prototyping
-          </p>
-          <p>QA automation, as I am about to show you</p>
-          <p>Automating human-dependent steps in QA process</p>
-          <p>Focus on web e2e tests</p>
-          <p>Agent navigating browser and executing test scenarios</p>
-          <p>Turning high-level test case descriptions into automated steps</p>
-          <p>
-            Potential for agent to explore web app, suggest test suites, build
-            models, etc.
-          </p>
+          <section data-auto-animate data-auto-animate-id="our-approach">
+            <h2>Our Approach to Agents</h2>
+          </section>
+          <section data-auto-animate data-auto-animate-id="our-approach">
+            <h2>Our Approach to Agents</h2>
+            <p><strong>Generalist:</strong> provide functionality through plugins</p>
+            <p><strong>Supervised:</strong> understanding and improving reliability</p>
+            <p><strong>Observable:</strong> gathering data for training</p>
+          </section>
+          <section data-auto-animate data-auto-animate-id="our-approach">
+            <h2>Our Approach to Agents</h2>
+            <img src="images/agent-framework.png" alt="Agent framework diagram">
+            <p>Structure of an agent</p>
+          </section>
+          <section data-auto-animate data-auto-animate-id="our-approach">
+            <h2>Our Approach to Agents</h2>
+            <div style="height: 500px; overflow-y: scroll;">
+              <img src="images/agent-ui.png" alt="Agent UI screenshot" style="width: 100%; max-width: unset; height: auto; max-height: unset;">
+            </div>
+            <p>UI for supervision</p>
+          </section>
+          <section data-auto-animate data-auto-animate-id="our-approach">
+            <h3>Our Approach to Agents</h3>
+            <video controls>
+              <source src="images/agent-demo.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </section>
         </section>
-
         <section>
-          <h3>Our Approach to Agents</h3>
-          <p>Building long-running agents for complex tasks</p>
-          <p>Close supervision of agents to handle low reliability</p>
-          <p>Direct use of histories for fine-tuning agent behavior</p>
-          <p>
-            Capturing extra information (internal monologue, reasoning) for
-            dataset building
-          </p>
+          <h1>Thank you</h1>
+          <h2>Questions and live demo</h2>
         </section>
-
-        <section>
-          <h3>Demo</h3>
-          <p>Agent running scenarios from the mind2web dataset</p>
+        <section data-background-iframe="http://localhost:7860" data-background-interactive>
+          <!-- Live demo of the browsing agent -->
         </section>
       </div>
     </div>
 
     <script src="dist/reveal.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
     <script>
-      Reveal.initialize();
+      Reveal.initialize(
+        {
+          plugins: [RevealMarkdown, RevealHighlight],
+        }
+      );
     </script>
   </body>
 </html>
